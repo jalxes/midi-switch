@@ -24,9 +24,9 @@ include ../../dpf/Makefile.plugins.mk
 # --------------------------------------------------------------
 # Enable all possible plugin types
 
-ifeq ($(LINUX),true)
-TARGETS += jack
-endif
+# ifeq ($(LINUX),true)
+# TARGETS += jack
+# endif
 
 TARGETS += lv2_dsp
 # TARGETS += vst
