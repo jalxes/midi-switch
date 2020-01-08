@@ -16,7 +16,7 @@
  */
 
 #include "DistrhoPlugin.hpp"
-#include <iostream>
+#include "string"
 #include <vector>
 
 START_NAMESPACE_DISTRHO
@@ -46,7 +46,7 @@ protected:
      A plugin label follows the same rules as Parameter::symbol, with the
      exception that it can start with numbers.
    */
-  const char* getLabel() const override { return "MidiSwitch"; }
+  const char* getLabel() const override { return "Midi Switch"; }
 
   /**
      Get an extensive comment/description about the plugin.
@@ -94,10 +94,15 @@ protected:
     if (index > kParamCount)
       return;
 
-    if (index % 2 == 0) {
-      parameter.hints = kParameterIsOutput | kParameterIsBoolean;
-      parameter.name = "Status_CC_Channel" + index;
-      parameter.symbol = "Status_CC_Channel" + index;
+    if (index < 16) {
+      parameter.hints = kParameterIsAutomable | kParameterIsBoolean;
+      //   parameter.hints = kParameterIsOutput | kParameterIsBoolean;
+      parameter.ranges.def = 0.0f;
+      parameter.ranges.min = 0.0f;
+      parameter.ranges.max = 1.0f;
+      parameter.name = ("Status_CC_Channel" + std::to_string(index)).c_str();
+      parameter.symbol = parameter.name;
+      parameter.symbol.replace('-', '_');
       return;
     }
 
@@ -105,11 +110,9 @@ protected:
     parameter.ranges.def = 0.0f;
     parameter.ranges.min = 0.0f;
     parameter.ranges.max = 127.0f;
-    /**
-       Set the (unique) parameter name.
-     */
-    parameter.name = "CC_Channel" + index;
-    parameter.symbol = "CC_Channel" + index;
+    parameter.name = ("CC_Channel" + std::to_string(index - 16)).c_str();
+    parameter.symbol = parameter.name;
+    parameter.symbol.replace('-', '_');
   }
 
   /* --------------------------------------------------------------------------------------------------------
@@ -143,8 +146,71 @@ protected:
 
     for (uint32_t i = 0; i < midiEventCount; ++i) {
       MidiEvent event = midiEvents[i];
-      //   event.data[0] = 1;
-      writeMidiEvent(event);
+
+      if (fParams[kStatusChannel0]) {
+        event.data[0] = 0 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel1]) {
+        event.data[0] = 1 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel2]) {
+        event.data[0] = 2 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel3]) {
+        event.data[0] = 3 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel4]) {
+        event.data[0] = 4 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel5]) {
+        event.data[0] = 5 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel6]) {
+        event.data[0] = 6 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel7]) {
+        event.data[0] = 7 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel8]) {
+        event.data[0] = 8 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel9]) {
+        event.data[0] = 9 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel10]) {
+        event.data[0] = 10 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel11]) {
+        event.data[0] = 11 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel12]) {
+        event.data[0] = 12 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel13]) {
+        event.data[0] = 13 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel14]) {
+        event.data[0] = 14 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
+      if (fParams[kStatusChannel15]) {
+        event.data[0] = 15 + (event.data[2] != 0 ? 0x90 : 0x80);
+        writeMidiEvent(event);
+      }
     }
   }
 
