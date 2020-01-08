@@ -1,2 +1,2 @@
 # midi swich
-midi switch
+takes midi input events and send to selected channels

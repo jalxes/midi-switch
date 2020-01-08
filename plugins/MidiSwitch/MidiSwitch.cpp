@@ -51,7 +51,10 @@ protected:
   /**
      Get an extensive comment/description about the plugin.
    */
-  const char* getDescription() const override { return "MidiSwitch man."; }
+  const char* getDescription() const override
+  {
+    return "takes midi input events and send to selected channels";
+  }
 
   /**
      Get the plugin author/maker.
